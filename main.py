@@ -1,4 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
+# Usage:
+# python3 main.py [path]
+# defaults to stupid path, see TODO below
+
+import sys
 
 # counters for subystems, nodes, and nulls
 sysID = 0
@@ -133,9 +139,22 @@ def testComponent(str):
 #
 
 # read the output from Minecraft
-f = open("/home/jared/.local/share/multimc/instances/testing/.minecraft/elnDumpSubSystems.txt")
+
+if len(sys.argv) == 2:
+    f = open(sys.argv[1])
+else:
+    # TODO: replace with search for any instances later.
+    # this will first get $user, and then check the suspected homedir
+    # for a multimc instnace or regular Minecraft instance in AppData.
+    # If it finds multimc, it will pick a "testing" or "test" instnace, if not,
+    # then it will select the first available instance alphabetically.
+    f = open("/home/jared/.local/share/multimc/instances/testing/.minecraft/elnDumpSubSystems.txt")
+
+# TODO: could do some error checking here.
 lines = f.readlines()
 f.close()
+
+# TODO: Add version checking (for later revisions) and other info here.
 
 # create a dot file for each subsystem
 for line in lines:
